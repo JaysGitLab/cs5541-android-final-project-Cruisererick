@@ -1,31 +1,41 @@
-package com.example.erick.criminalintent;
+package com.example.erick.finalproject;
 
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.io.File;
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -48,6 +58,13 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     private ImageView mPhotoView;
     private File mPhotoFile;
 
+    private ImageView mImageView;
+    private GoogleMap googleMap;
+    private  GoogleApiClient mClient;
+    private static final String TAG = "CrimeFragment";
+    private Location mCurrentLocation;
+
+
     public static CrimeFragment newInstance(UUID crimeId){
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID,crimeId);
@@ -65,11 +82,38 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
         mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
+
+        mClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks(){
+
+                    @Override
+                    public void onConnected(Bundle bundle){
+                        getloca();
+
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i){
+
+                    }
+
+            })
+                .build();
     }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        //getActivity().invalidateOptionsMenu();
+        mClient.connect();
+    }
+
     @Override
     public void onPause(){
         super.onPause();
         CrimeLab.get(getActivity()).updateCrime(mCrime);
+        mClient.disconnect();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container
@@ -96,10 +140,10 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
             }
 
         });
-        mDateButton = (Button)v.findViewById(R.id.crime_date);
-        updateDate();
+        //mDateButton = (Button)v.findViewById(R.id.crime_date);
+        //updateDate();
         //mDateButton.setEnabled(false);
-        mDateButton.setOnClickListener(new View.OnClickListener(){
+        /*mDateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 FragmentManager manager = getFragmentManager();
@@ -108,17 +152,17 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
                 dialog.setTargetFragment(CrimeFragment.this,REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
-        });
-        mSolvedcheckBox = (CheckBox)v.findViewById(R.id.crime_solved);
-        mSolvedcheckBox.setChecked(mCrime.isSolve());
-        mSolvedcheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+        });*/
+        //mSolvedcheckBox = (CheckBox)v.findViewById(R.id.crime_solved);
+        //mSolvedcheckBox.setChecked(mCrime.isSolve());
+       /* mSolvedcheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked){
               // Set the crime solved propoety
               mCrime.setSolve(isChecked);
             }
 
-        });
+        });*/
         mReportButton = (Button) v.findViewById(R.id.crime_report);
         mReportButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -133,21 +177,21 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         });
 
         final Intent pickContact = new Intent (Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        mSuspectButton = (Button) v.findViewById(R.id.crime_suspect);
-        mSuspectButton.setOnClickListener(new View.OnClickListener(){
+        //mSuspectButton = (Button) v.findViewById(R.id.crime_suspect);
+        /*mSuspectButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 startActivityForResult(pickContact,REQUEST_CONTACT);
             }
-        });
-        if(mCrime.getSuspect()!= null){
+        });*/
+        /*if(mCrime.getSuspect()!= null){
             mSuspectButton.setText(mCrime.getSuspect());
-        }
+        }*/
 
         PackageManager packageManager = getActivity().getPackageManager();
-        if (packageManager.resolveActivity(pickContact,
+        /*if (packageManager.resolveActivity(pickContact,
                 PackageManager.MATCH_DEFAULT_ONLY)==null){
             mSuspectButton.setEnabled(false);
-        }
+        }*/
         mPhotoButton = (ImageButton) v.findViewById(R.id.crime_camara);
         final Intent captureImage = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
         boolean canTakePhoto = mPhotoFile != null &&
@@ -160,12 +204,28 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         mPhotoButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-            startActivityForResult(captureImage,REQUEST_PHOTO);
+                startActivityForResult(captureImage,REQUEST_PHOTO);
             }
         });
         mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
         updatePhotoView();
+
+        googleMap =((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)).getMap();
         return v;
+    }
+
+    private void getloca(){
+        LocationRequest request = LocationRequest.create();
+        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        request.setNumUpdates(1);
+        request.setInterval(0);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mClient, request, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        Log.i(TAG,"Got a fix: "+ location);
+                        new SearchTask().execute(location);
+                    }
+                });
     }
 
     @Override
@@ -173,28 +233,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         if(resultCode != Activity.RESULT_OK){
             return;
         }
-        if(requestCode == REQUEST_DATE){
-            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            mCrime.setDate(date);
-            updateDate();
-        }else if (requestCode == REQUEST_CONTACT && data != null){
-            Uri contactUri = data.getData();
-            String[] queryFields = new String[]{
-              ContactsContract.Contacts.DISPLAY_NAME
-            };
-            Cursor c = getActivity().getContentResolver().query(contactUri,queryFields,null,null,null);
-            try{
-               if (c.getCount()==0){
-                   return;
-               }
-                c.moveToFirst();
-                String suspect = c.getString(0);
-                mCrime.setSuspect(suspect);
-                mSuspectButton.setText(suspect);
-            }finally {
-                c.close();
-            }
-        }else if (requestCode == REQUEST_PHOTO){
+        if (requestCode == REQUEST_PHOTO){
             updatePhotoView();
         }
     }
@@ -206,7 +245,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     private String getCrimeReport(){
         String solvedString = null;
 
-        if(mCrime.isSolve()){
+        /*if(mCrime.isSolve()){
             solvedString = getString(R.string.crime_report_solved);
         }else{
             solvedString = getString(R.string.crime_report_unsolved);
@@ -220,10 +259,11 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         }else{
             suspect = getString(R.string.crime_report_suspect,suspect);
         }
-
-        String report = getString(R.string.crime_report,mCrime.getTitle(),dateString,solvedString,suspect);
+        */
+        String report = getString(R.string.crime_report,mCrime.getTitle(),null,solvedString,null);
         return report;
     }
+
     private void updatePhotoView(){
       if (mPhotoFile == null || !mPhotoFile.exists()){
         mPhotoView.setImageDrawable(null);
@@ -231,5 +271,54 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
           Bitmap bitmap = PictureUtils.getScaleBitmap(mPhotoFile.getPath(),getActivity());
           mPhotoView.setImageBitmap(bitmap);
       }
+
     }
+
+    private void zoomin(Location location){
+
+        if (googleMap == null){
+            return;
+        }
+        if(mCurrentLocation == null){
+            return;
+        }else
+        {
+            location = mCurrentLocation;
+        }
+        LatLng mypoint = new LatLng(location.getLatitude(),location.getLongitude());
+        LatLng mypoint1 = new LatLng(location.getLatitude()+0.001,location.getLongitude()+0.001);
+        LatLng mypoint2 = new LatLng(location.getLatitude()-0.001,location.getLongitude()-0.001);
+
+        MarkerOptions myMarker = new MarkerOptions().position(mypoint);
+        googleMap.clear();
+        googleMap.addMarker(myMarker);
+
+        LatLngBounds bounds = new LatLngBounds.Builder()
+                .include(mypoint)
+                .include(mypoint1)
+                .include(mypoint2)
+                .build();
+        int margin = getResources().getDimensionPixelSize(R.dimen.map_inset_margin);
+        CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds,margin);
+        googleMap.animateCamera(update);
+
+
+    }
+
+    private class SearchTask extends AsyncTask<Location,Void,Void>{
+
+        private Location mLocation;
+        @Override
+        protected Void doInBackground(Location... params){
+            mLocation = params[0];
+          return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            mCurrentLocation = mLocation;
+            zoomin(mCurrentLocation);
+        }
+    }
+
 }

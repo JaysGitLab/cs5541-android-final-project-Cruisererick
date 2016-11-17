@@ -1,4 +1,4 @@
-package com.example.erick.criminalintent;
+package com.example.erick.finalproject;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,10 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
-import com.example.erick.criminalintent.database.CrimeBaseHelper;
-import com.example.erick.criminalintent.database.CrimeCursorWrapper;
-import com.example.erick.criminalintent.database.CrimeDBSchema;
-import com.example.erick.criminalintent.database.CrimeDBSchema.CrimeTable;
+import com.example.erick.finalproject.database.CrimeBaseHelper;
+import com.example.erick.finalproject.database.CrimeCursorWrapper;
+import com.example.erick.finalproject.database.CrimeDBSchema.CrimeTable;
 
 import java.io.File;
 import java.util.ArrayList;

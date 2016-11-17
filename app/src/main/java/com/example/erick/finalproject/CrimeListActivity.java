@@ -1,4 +1,4 @@
-package com.example.erick.criminalintent;
+package com.example.erick.finalproject;
 
 import android.support.v4.app.Fragment;
 

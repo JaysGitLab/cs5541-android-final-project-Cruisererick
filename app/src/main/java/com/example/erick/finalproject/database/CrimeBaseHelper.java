@@ -1,10 +1,10 @@
-package com.example.erick.criminalintent.database;
+package com.example.erick.finalproject.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.erick.criminalintent.database.CrimeDBSchema.CrimeTable;
+import com.example.erick.finalproject.database.CrimeDBSchema.CrimeTable;
 
 /**
  * Created by eric on 10/6/2016.

@@ -1,4 +1,4 @@
-package com.example.erick.criminalintent.database;
+package com.example.erick.finalproject.database;
 
 /**
  * Created by eric on 10/6/2016.

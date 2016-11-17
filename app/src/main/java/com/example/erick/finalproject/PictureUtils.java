@@ -1,4 +1,4 @@
-package com.example.erick.criminalintent;
+package com.example.erick.finalproject;
 
 import android.app.Activity;
 import android.graphics.Bitmap;

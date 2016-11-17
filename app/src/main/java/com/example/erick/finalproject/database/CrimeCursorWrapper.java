@@ -1,10 +1,10 @@
-package com.example.erick.criminalintent.database;
+package com.example.erick.finalproject.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.example.erick.criminalintent.Crime;
-import com.example.erick.criminalintent.database.CrimeDBSchema.CrimeTable;
+import com.example.erick.finalproject.Crime;
+import com.example.erick.finalproject.database.CrimeDBSchema.CrimeTable;
 
 import java.util.Date;
 import java.util.UUID;
