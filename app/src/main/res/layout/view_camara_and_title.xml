@@ -18,7 +18,8 @@
             android:layout_height="80dp"
             android:scaleType="centerInside"
             android:background="@android:color/darker_gray"
-            android:cropToPadding="true"/>
+            android:cropToPadding="true"
+            />
         <ImageButton
             android:id="@+id/crime_camara"
             android:layout_width="match_parent"

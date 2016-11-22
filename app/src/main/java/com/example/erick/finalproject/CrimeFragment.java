@@ -24,6 +24,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -61,11 +62,14 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     private ImageView mPhotoView;
     private File mPhotoFile;
 
+
     private ImageView mImageView;
     private GoogleMap googleMap;
     private  GoogleApiClient mClient;
     private static final String TAG = "CrimeFragment";
     private android.location.Location mCurrentLocation;
+    boolean isImageFitToScreen;
+
 
 
     public static CrimeFragment newInstance(UUID LocationId){
@@ -93,7 +97,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
 
                     @Override
                     public void onConnected(Bundle bundle){
-
+                        if(mCurrentLocation==null)
                         getloca();
 
 
@@ -221,6 +225,23 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
             }
         });
         mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
+
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen && mCurrentLocation!=null) {
+                    isImageFitToScreen=false;
+                    mPhotoView.setLayoutParams(new LinearLayout.LayoutParams(270,270));
+                    mPhotoView.setAdjustViewBounds(true);
+                }else{
+                    if(mCurrentLocation!=null){
+                    isImageFitToScreen=true;
+                    mPhotoView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    mPhotoView.setAdjustViewBounds(true);}
+            }
+            }
+        });
+
         updatePhotoView();
 
         googleMap =((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -364,6 +385,7 @@ if (mypoint3.toString().compareTo(mypoint.toString())==0) {
         private android.location.Location mauxLocation;
         @Override
         protected Void doInBackground(android.location.Location... params){
+
             mauxLocation = params[0];
           return null;
         }
