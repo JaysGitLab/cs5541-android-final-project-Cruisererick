@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,12 +42,12 @@ import java.util.UUID;
  */
 public class CrimeFragment extends android.support.v4.app.Fragment {
 
-    private static final String ARG_CRIME_ID = "crime_id";
+    private static final String ARG_LOCATION_ID = "location_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_CONTACT = 1;
     private static final int REQUEST_PHOTO = 2;
-    private Crime mCrime;
+    private Location mLocation;
     private EditText mTitlefield;
     private Button mDateButton;
     private CheckBox mSolvedcheckBox;
@@ -62,12 +61,12 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     private GoogleMap googleMap;
     private  GoogleApiClient mClient;
     private static final String TAG = "CrimeFragment";
-    private Location mCurrentLocation;
+    private android.location.Location mCurrentLocation;
 
 
-    public static CrimeFragment newInstance(UUID crimeId){
+    public static CrimeFragment newInstance(UUID LocationId){
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CRIME_ID,crimeId);
+        args.putSerializable(ARG_LOCATION_ID,LocationId);
 
         CrimeFragment fragment = new CrimeFragment();
         fragment.setArguments(args);
@@ -77,11 +76,11 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedIntenceState){
         super.onCreate(savedIntenceState);
-        //mCrime = new Crime();
+        //mLocation = new Location();
         //UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra((CrimeActivity.EXTRA_CRIME_ID));
-        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
-        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
-        mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
+        UUID LocationId = (UUID) getArguments().getSerializable(ARG_LOCATION_ID);
+        mLocation = LocationLab.get(getActivity()).getLocation(LocationId);
+        mPhotoFile = LocationLab.get(getActivity()).getPhotoFile(mLocation);
 
         mClient = new GoogleApiClient.Builder(getActivity())
                 .addApi(LocationServices.API)
@@ -89,6 +88,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
 
                     @Override
                     public void onConnected(Bundle bundle){
+                        if (mLocation.getLocation()==null)
                         getloca();
 
                     }
@@ -112,7 +112,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     @Override
     public void onPause(){
         super.onPause();
-        CrimeLab.get(getActivity()).updateCrime(mCrime);
+        LocationLab.get(getActivity()).updateLocation(mLocation);
         mClient.disconnect();
     }
     @Override
@@ -122,7 +122,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
 
 
         mTitlefield = (EditText)v.findViewById(R.id.crime_title);
-        mTitlefield.setText(mCrime.getTitle());
+        mTitlefield.setText(mLocation.getDescription());
         mTitlefield.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -131,7 +131,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-            mCrime.setTitle(s.toString());
+            mLocation.setDescription(s.toString());
             }
 
             @Override
@@ -148,18 +148,18 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
             public void onClick(View v){
                 FragmentManager manager = getFragmentManager();
                 //DatePickerFragment dialog = new DatePickerFragment();
-                DatePickerFragment dialog = DatePickerFragment.newInnstance(mCrime.getDate());
+                DatePickerFragment dialog = DatePickerFragment.newInnstance(mLocation.getDate());
                 dialog.setTargetFragment(CrimeFragment.this,REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
         });*/
         //mSolvedcheckBox = (CheckBox)v.findViewById(R.id.crime_solved);
-        //mSolvedcheckBox.setChecked(mCrime.isSolve());
+        //mSolvedcheckBox.setChecked(mLocation.isSolve());
        /* mSolvedcheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked){
               // Set the crime solved propoety
-              mCrime.setSolve(isChecked);
+              mLocation.setSolve(isChecked);
             }
 
         });*/
@@ -183,8 +183,8 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
                 startActivityForResult(pickContact,REQUEST_CONTACT);
             }
         });*/
-        /*if(mCrime.getSuspect()!= null){
-            mSuspectButton.setText(mCrime.getSuspect());
+        /*if(mLocation.getSuspect()!= null){
+            mSuspectButton.setText(mLocation.getSuspect());
         }*/
 
         PackageManager packageManager = getActivity().getPackageManager();
@@ -221,7 +221,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         request.setInterval(0);
         LocationServices.FusedLocationApi.requestLocationUpdates(mClient, request, new LocationListener() {
                     @Override
-                    public void onLocationChanged(Location location) {
+                    public void onLocationChanged(android.location.Location location) {
                         Log.i(TAG,"Got a fix: "+ location);
                         new SearchTask().execute(location);
                     }
@@ -238,29 +238,29 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         }
     }
 
-    private void updateDate() {
-        mDateButton.setText(mCrime.getDate().toString());
-    }
+    /*private void updateDate() {
+        mDateButton.setText(mLocation.getDate().toString());
+    }*/
 
     private String getCrimeReport(){
         String solvedString = null;
 
-        /*if(mCrime.isSolve()){
+        /*if(mLocation.isSolve()){
             solvedString = getString(R.string.crime_report_solved);
         }else{
             solvedString = getString(R.string.crime_report_unsolved);
         }
         String dateFormat = "EEE,MMM dd";
-        String dateString = DateFormat.format(dateFormat,mCrime.getDate()).toString();
+        String dateString = DateFormat.format(dateFormat,mLocation.getDate()).toString();
 
-        String suspect = mCrime.getSuspect();
+        String suspect = mLocation.getSuspect();
         if(suspect == null){
             suspect = getString(R.string.crime_report_no_suspect);
         }else{
             suspect = getString(R.string.crime_report_suspect,suspect);
         }
         */
-        String report = getString(R.string.crime_report,mCrime.getTitle(),null,solvedString,null);
+        String report = getString(R.string.crime_report, mLocation.getDescription(),null,solvedString,null);
         return report;
     }
 
@@ -274,7 +274,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
 
     }
 
-    private void zoomin(Location location){
+    private void zoomin(android.location.Location location){
 
         if (googleMap == null){
             return;
@@ -285,6 +285,11 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         {
             location = mCurrentLocation;
         }
+
+        if (mLocation.getLocation()!= null){
+            //mCurrentLocation = (Location) mLocation.getLocation();
+        }
+
         LatLng mypoint = new LatLng(location.getLatitude(),location.getLongitude());
         LatLng mypoint1 = new LatLng(location.getLatitude()+0.001,location.getLongitude()+0.001);
         LatLng mypoint2 = new LatLng(location.getLatitude()-0.001,location.getLongitude()-0.001);
@@ -305,18 +310,19 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
 
     }
 
-    private class SearchTask extends AsyncTask<Location,Void,Void>{
+    private class SearchTask extends AsyncTask<android.location.Location,Void,Void>{
 
-        private Location mLocation;
+        private android.location.Location mauxLocation;
         @Override
-        protected Void doInBackground(Location... params){
-            mLocation = params[0];
+        protected Void doInBackground(android.location.Location... params){
+            mauxLocation = params[0];
           return null;
         }
 
         @Override
         protected void onPostExecute(Void result){
-            mCurrentLocation = mLocation;
+            mCurrentLocation = mauxLocation;
+            mLocation.setLocation(mCurrentLocation.toString());
             zoomin(mCurrentLocation);
         }
     }

@@ -6,38 +6,38 @@ import java.util.UUID;
 /**
  * Created by Erick on 9/15/2016.
  */
-public class Crime {
+public class Location {
     private UUID mId;
-    private String mTitle;
-    private Date mDate;
-    private boolean mSolve;
-    private String mSuspect;
+    private String mDescription;
+    //private Date mDate;
+    //private boolean mSolve;
+    private String mLocation;
 
 
 
-    public Crime(){
+    public Location(){
         this(UUID.randomUUID());
         //mId = UUID.randomUUID();
         //mDate = new Date();
     }
-    public Crime(UUID id){
+    public Location(UUID id){
         mId = id;
-        mDate = new Date();
+        //mDate = new Date();
     }
 
     public UUID getId() {
         return mId;
     }
 
-    public String getTitle() {
-        return mTitle;
+    public String getDescription() {
+        return mDescription;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
+    public void setDescription(String descrip) {
+        mDescription = descrip;
     }
 
-    public boolean isSolve() {
+    /*public boolean isSolve() {
         return mSolve;
     }
 
@@ -51,14 +51,14 @@ public class Crime {
 
     public void setDate(Date mDate) {
         this.mDate = mDate;
+    }*/
+
+    public String getLocation() {
+        return mLocation;
     }
 
-    public String getSuspect() {
-        return mSuspect;
-    }
-
-    public void setSuspect(String mSuspect) {
-        this.mSuspect = mSuspect;
+    public void setLocation(String mLocation) {
+        this.mLocation = mLocation;
     }
 
     public String getPhotoFilename(){

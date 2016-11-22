@@ -71,13 +71,13 @@ public class CrimeListFragment extends Fragment {
 
     }
     private void updateUI(){
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
-        List<Crime> crimes = crimeLab.getCrime();
+        LocationLab locationLab = LocationLab.get(getActivity());
+        List<Location> locations = locationLab.getCrime();
         if(mAdapter==null) {
-            mAdapter = new CrimeAdapter(crimes);
+            mAdapter = new CrimeAdapter(locations);
             mCrimeRecyclerView.setAdapter(mAdapter);
         }else{
-            mAdapter.setCrimes(crimes);
+            mAdapter.setCrimes(locations);
             mAdapter.notifyDataSetChanged();
         }
         updateSubtitle();
@@ -87,7 +87,7 @@ public class CrimeListFragment extends Fragment {
         private TextView mTitleTextView;
         private TextView mDateTextView;
         private CheckBox mSolvedCheckBox;
-        private Crime mCrime;
+        private Location mLocation;
 
             public CrimeHolder(View itemView) {
             super(itemView);
@@ -99,27 +99,28 @@ public class CrimeListFragment extends Fragment {
         }
         @Override
         public void onClick(View v){
-            //Toast.makeText(getActivity(),mCrime.getTitle()+"Cliked!",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),mLocation.getTitle()+"Cliked!",Toast.LENGTH_SHORT).show();
             //Intent intent = new Intent(getActivity(),CrimeActivity.class);
-            //Intent intent = CrimeActivity.newIntent(getActivity(),mCrime.getId());
-            Intent intent = CrimePaperActivity.newIntent(getActivity(),mCrime.getId());
+            //Intent intent = CrimeActivity.newIntent(getActivity(),mLocation.getId());
+            Intent intent = CrimePaperActivity.newIntent(getActivity(), mLocation.getId());
             startActivity(intent);}
 
-        public void bindCrime(Crime crime){
-            mCrime = crime;
-            mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
-            mSolvedCheckBox.setChecked(mCrime.isSolve());
+        public void bindLocation(Location location){
+            mLocation = location;
+            mTitleTextView.setText(mLocation.getDescription());
+            //mDateTextView.setText(mLocation.getDate().toString());
+           // mSolvedCheckBox.setChecked(mLocation.isSolve());
+
 
         }
 
     }
 
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
-        private List<Crime> mCrimes;
+        private List<Location> mLocations;
 
-        public CrimeAdapter(List<Crime> crimes){
-            mCrimes = crimes;
+        public CrimeAdapter(List<Location> locations){
+            mLocations = locations;
         }
 
         @Override
@@ -131,19 +132,19 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position){
-            Crime crime = mCrimes.get(position);
-            holder.bindCrime(crime);
+            Location location = mLocations.get(position);
+            holder.bindLocation(location);
 
         }
 
         @Override
         public int getItemCount(){
 
-            return mCrimes.size();
+            return mLocations.size();
         }
 
-        public void setCrimes(List<Crime> crimes){
-            mCrimes = crimes;
+        public void setCrimes(List<Location> locations){
+            mLocations = locations;
         }
     }
 
@@ -151,9 +152,9 @@ public class CrimeListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.menu_item_new_crime:
-                Crime crime = new Crime();
-                CrimeLab.get(getActivity()).addCrime(crime);
-                Intent intent = CrimePaperActivity.newIntent(getActivity(),crime.getId());
+                Location location = new Location();
+                LocationLab.get(getActivity()).addLocation(location);
+                Intent intent = CrimePaperActivity.newIntent(getActivity(), location.getId());
                 startActivity(intent);
                 return true;
             case R.id.menu_item_show_subtitle:
@@ -166,8 +167,8 @@ public class CrimeListFragment extends Fragment {
         }
     }
     private void updateSubtitle(){
-        CrimeLab crimeLab= CrimeLab.get(getActivity());
-        int crimeCount = crimeLab.getCrime().size();
+        LocationLab locationLab = LocationLab.get(getActivity());
+        int crimeCount = locationLab.getCrime().size();
         String subtitle = getString(R.string.subtitle_format, Integer.toString(crimeCount));
 
         if(!mSubtitleVisible){

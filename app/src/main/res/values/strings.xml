@@ -4,14 +4,14 @@
     <string name="crime_title_label">Description</string>
     <string name="crime_details_label">Map</string>
     <string name="crime_solved_label">Solved</string>
-    <string name="date_picker_title">Date of crime:</string>
+    <string name="date_picker_title">Date of location:</string>
     <string name="new_crime">New Crime</string>
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
-    <string name="subtitle_format">%1$s crimes</string>
+    <string name="subtitle_format">%1$s locations</string>
     <string name="crime_suspect_text">Choose Suspect</string>
     <string name="crime_report_text">Send location</string>
-    <string name="crime_report">%1$s! The crime was discovered on %2$s.%3$s, and %4$s</string>
+    <string name="crime_report">%1$s! The location was discovered on %2$s.%3$s, and %4$s</string>
     <string name="crime_report_solved">The case is solved</string>
     <string name="crime_report_unsolved">The cse is not solved</string>
     <string name="crime_report_no_suspect">there is no suspect.</string>

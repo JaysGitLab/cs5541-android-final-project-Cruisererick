@@ -3,8 +3,8 @@ package com.example.erick.finalproject.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.example.erick.finalproject.Crime;
-import com.example.erick.finalproject.database.CrimeDBSchema.CrimeTable;
+import com.example.erick.finalproject.Location;
+import com.example.erick.finalproject.database.LocationDBSchema.LocationTable;
 
 import java.util.Date;
 import java.util.UUID;
@@ -18,20 +18,20 @@ public class CrimeCursorWrapper extends CursorWrapper {
         super(cursor);
     }
 
-    public Crime getCrime(){
+    public Location getCrime(){
 
-        String uuidString = getString(getColumnIndex(CrimeTable.Cols.UUID));
-        String title = getString(getColumnIndex(CrimeTable.Cols.TITLE));
-        long date = getLong(getColumnIndex(CrimeTable.Cols.DATE));
-        int isSolved = getInt(getInt(getColumnIndex(CrimeTable.Cols.SOLVED)));
-        String suspect = getString(getColumnIndex(CrimeTable.Cols.SUSPECT));
+        String uuidString = getString(getColumnIndex(LocationTable.Cols.UUID));
+        String description = getString(getColumnIndex(LocationTable.Cols.DESCRIPTION));
+        //long date = getLong(getColumnIndex(LocationTable.Cols.DATE));
+        //int isSolved = getInt(getInt(getColumnIndex(LocationTable.Cols.SOLVED)));
+        String currentlocation = getString(getColumnIndex(LocationTable.Cols.LOCATION));
 
-        Crime crime = new Crime(UUID.fromString(uuidString));
-        crime.setTitle(title);
-        crime.setDate(new Date(date));
-        crime.setSolve(isSolved!=0);
-        crime.setSuspect(suspect);
+        Location location = new Location(UUID.fromString(uuidString));
+        location.setDescription(description);
+        //location.setDate(new Date(date));
+        //location.setSolve(isSolved!=0);
+        location.setLocation(currentlocation);
 
-        return crime;
+        return location;
     }
 }

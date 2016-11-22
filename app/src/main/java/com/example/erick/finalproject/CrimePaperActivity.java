@@ -19,7 +19,7 @@ import java.util.UUID;
 public class CrimePaperActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
-    private List<Crime> mCrimes;
+    private List<Location> mLocations;
     private static final String EXTRA_CRIME_ID =
             "com.example.erick.criminalintent.crime_id";
 
@@ -34,23 +34,23 @@ public class CrimePaperActivity extends AppCompatActivity {
     setContentView(R.layout.activity_crime_paper);
     UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
     mViewPager = (ViewPager) findViewById(R.id.activity_crime_paper_view_paper);
-    mCrimes = CrimeLab.get(this).getCrime();
+    mLocations = LocationLab.get(this).getCrime();
     FragmentManager fragmentManager = getSupportFragmentManager();
     mViewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
         @Override
         public Fragment getItem(int position) {
-            Crime crime = mCrimes.get(position);
-            return CrimeFragment.newInstance(crime.getId());
+            Location location = mLocations.get(position);
+            return CrimeFragment.newInstance(location.getId());
 
         }
 
         @Override
         public int getCount() {
-            return mCrimes.size();
+            return mLocations.size();
         }
     });
-    for (int i = 0; i< mCrimes.size();i++){
-        if (mCrimes.get(i).getId().equals(crimeId)){
+    for (int i = 0; i< mLocations.size(); i++){
+        if (mLocations.get(i).getId().equals(crimeId)){
             mViewPager.setCurrentItem(i);
             break;
         }
