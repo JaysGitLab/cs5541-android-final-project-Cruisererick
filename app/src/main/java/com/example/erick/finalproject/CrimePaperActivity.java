@@ -20,8 +20,7 @@ public class CrimePaperActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private List<Location> mLocations;
-    private static final String EXTRA_CRIME_ID =
-            "com.example.erick.criminalintent.crime_id";
+    private static final String EXTRA_CRIME_ID = "com.example.erick.criminalintent.crime_id";
 
     public static Intent newIntent(Context packageContext,UUID crimeId){
        Intent intent = new Intent(packageContext,CrimePaperActivity.class);

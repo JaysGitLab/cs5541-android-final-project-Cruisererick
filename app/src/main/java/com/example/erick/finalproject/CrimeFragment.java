@@ -14,6 +14,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,6 +33,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -76,6 +80,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedIntenceState){
         super.onCreate(savedIntenceState);
+        setHasOptionsMenu(true);
         //mLocation = new Location();
         //UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra((CrimeActivity.EXTRA_CRIME_ID));
         UUID LocationId = (UUID) getArguments().getSerializable(ARG_LOCATION_ID);
@@ -88,8 +93,9 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
 
                     @Override
                     public void onConnected(Bundle bundle){
-                        if (mLocation.getLocation()==null)
+
                         getloca();
+
 
                     }
 
@@ -100,6 +106,12 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
 
             })
                 .build();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.frasgment_location_delete,menu);
     }
 
     @Override
@@ -115,6 +127,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         LocationLab.get(getActivity()).updateLocation(mLocation);
         mClient.disconnect();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container
     ,Bundle savedInstanceState){
@@ -276,6 +289,10 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
 
     private void zoomin(android.location.Location location){
 
+        LatLng mypoint  = null;
+        LatLng mypoint1 = null ;
+        LatLng mypoint2 = null ;
+        LatLng mypoint3 = null;
         if (googleMap == null){
             return;
         }
@@ -284,29 +301,61 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         }else
         {
             location = mCurrentLocation;
+            if(location!=null){
+                 mypoint = new LatLng(location.getLatitude(),location.getLongitude());
+                 mypoint1 = new LatLng(location.getLatitude()+0.001,location.getLongitude()+0.001);
+                 mypoint2 = new LatLng(location.getLatitude()-0.001,location.getLongitude()-0.001);}
         }
+
+
 
         if (mLocation.getLocation()!= null){
-            //mCurrentLocation = (Location) mLocation.getLocation();
+            String[] auxlo =  mLocation.getLocation().split(",");
+            double longitude = Double.parseDouble(auxlo[0]);
+            double latitude = Double.parseDouble(auxlo[1]);
+            LatLng auxlocation = new LatLng(latitude, longitude);;
+            mypoint3 = new LatLng(auxlocation.latitude,auxlocation.longitude);
+
         }
 
-        LatLng mypoint = new LatLng(location.getLatitude(),location.getLongitude());
-        LatLng mypoint1 = new LatLng(location.getLatitude()+0.001,location.getLongitude()+0.001);
-        LatLng mypoint2 = new LatLng(location.getLatitude()-0.001,location.getLongitude()-0.001);
 
-        MarkerOptions myMarker = new MarkerOptions().position(mypoint);
-        googleMap.clear();
-        googleMap.addMarker(myMarker);
+if (mypoint3.toString().compareTo(mypoint.toString())==0) {
+    MarkerOptions myMarker = new MarkerOptions().position(mypoint);
+    googleMap.clear();
+    googleMap.addMarker(new MarkerOptions()
+            .position(mypoint)
+            .title("Car")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-        LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(mypoint)
-                .include(mypoint1)
-                .include(mypoint2)
-                .build();
-        int margin = getResources().getDimensionPixelSize(R.dimen.map_inset_margin);
-        CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds,margin);
-        googleMap.animateCamera(update);
+    LatLngBounds bounds = new LatLngBounds.Builder()
+            .include(mypoint)
+            .include(mypoint1)
+            .include(mypoint2)
+            .build();
+    int margin = getResources().getDimensionPixelSize(R.dimen.map_inset_margin);
+    CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, margin);
+    googleMap.animateCamera(update);
+}else{
+    MarkerOptions myMarker = new MarkerOptions().position(mypoint);
+    MarkerOptions secondMarker = new MarkerOptions().position(mypoint3);
+    googleMap.clear();
+    googleMap.addMarker(new MarkerOptions()
+            .position(mypoint)
+            .title("User location")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+    googleMap.addMarker(new MarkerOptions()
+            .position(mypoint3)
+            .title("Car")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
+    LatLngBounds bounds = new LatLngBounds.Builder()
+            .include(mypoint)
+            .include(mypoint3)
+            .build();
+    int margin = getResources().getDimensionPixelSize(R.dimen.map_inset_margin);
+    CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, margin);
+    googleMap.animateCamera(update);
+}
 
     }
 
@@ -322,8 +371,21 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         @Override
         protected void onPostExecute(Void result){
             mCurrentLocation = mauxLocation;
-            mLocation.setLocation(mCurrentLocation.toString());
+            if(mLocation.getLocation()==null)
+            mLocation.setLocation(mCurrentLocation.getLongitude()+","+ mCurrentLocation.getLatitude());
             zoomin(mCurrentLocation);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menu_item_delete_location:
+                LocationLab.get(getActivity()).deleteLocation(mLocation);
+                getActivity().finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

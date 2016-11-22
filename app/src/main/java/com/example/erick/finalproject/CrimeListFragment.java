@@ -52,24 +52,21 @@ public class CrimeListFragment extends Fragment {
         super.onResume();
         updateUI();
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
         outState.putBoolean(SAVED_SUBTITLE_VISIBLE,mSubtitleVisible);
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime_list,menu);
 
-        MenuItem subtitleItem = menu.findItem(R.id.menu_item_show_subtitle);
-        if(mSubtitleVisible){
-            subtitleItem.setTitle(R.string.hide_subtitle);
-        }else{
-            subtitleItem.setTitle(R.string.show_subtitle);
-        }
 
     }
+
     private void updateUI(){
         LocationLab locationLab = LocationLab.get(getActivity());
         List<Location> locations = locationLab.getCrime();
@@ -80,7 +77,7 @@ public class CrimeListFragment extends Fragment {
             mAdapter.setCrimes(locations);
             mAdapter.notifyDataSetChanged();
         }
-        updateSubtitle();
+        //updateSubtitle();
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -94,7 +91,9 @@ public class CrimeListFragment extends Fragment {
             itemView.setOnClickListener(this);
             mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
             mDateTextView = (TextView) itemView.findViewById(R.id.list_item_crime_date_text_view);
-            mSolvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_crime_solved_check_box);
+            //mSolvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_crime_solved_check_box);
+
+
 
         }
         @Override
@@ -110,8 +109,6 @@ public class CrimeListFragment extends Fragment {
             mTitleTextView.setText(mLocation.getDescription());
             //mDateTextView.setText(mLocation.getDate().toString());
            // mSolvedCheckBox.setChecked(mLocation.isSolve());
-
-
         }
 
     }
@@ -146,27 +143,30 @@ public class CrimeListFragment extends Fragment {
         public void setCrimes(List<Location> locations){
             mLocations = locations;
         }
+
+
+
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
-            case R.id.menu_item_new_crime:
+            case R.id.menu_item_new_location:
                 Location location = new Location();
                 LocationLab.get(getActivity()).addLocation(location);
                 Intent intent = CrimePaperActivity.newIntent(getActivity(), location.getId());
                 startActivity(intent);
                 return true;
-            case R.id.menu_item_show_subtitle:
-                mSubtitleVisible = !mSubtitleVisible;
-                getActivity().invalidateOptionsMenu();
-                updateSubtitle();
+            case R.id.menu_item_delete_location:
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-    private void updateSubtitle(){
+
+    /*private void updateSubtitle(){
         LocationLab locationLab = LocationLab.get(getActivity());
         int crimeCount = locationLab.getCrime().size();
         String subtitle = getString(R.string.subtitle_format, Integer.toString(crimeCount));
@@ -176,5 +176,7 @@ public class CrimeListFragment extends Fragment {
         }
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.getSupportActionBar().setSubtitle(subtitle);
-    }
+    }*/
+
+
 }

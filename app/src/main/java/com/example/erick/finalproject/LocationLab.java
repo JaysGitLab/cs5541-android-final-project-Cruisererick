@@ -61,6 +61,7 @@ public class LocationLab {
         }
         return locations;
     }
+
     public Location getLocation(UUID id){
         //for (Location crime:mCrimes){
             //if(crime.getId().equals(id)){
@@ -94,7 +95,14 @@ public class LocationLab {
         String uuidString = location.getId().toString();
         ContentValues values = getContentValues(location);
         mDatabase.update(LocationTable.NAME,values,LocationTable.Cols.UUID+"=?",
-                new String[] {uuidString});}
+                new String[] {uuidString});
+    }
+
+    public void deleteLocation(Location location){
+        String uuidString = location.getId().toString();
+        ContentValues values = getContentValues(location);
+        mDatabase.delete(LocationTable.NAME,LocationTable.Cols.UUID + "=?", new String[] {uuidString});
+    }
 
     private static ContentValues getContentValues(Location location){
         ContentValues values = new ContentValues();

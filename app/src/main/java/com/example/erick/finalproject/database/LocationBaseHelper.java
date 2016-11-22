@@ -13,7 +13,7 @@ import com.example.erick.finalproject.database.LocationDBSchema.LocationTable;
 public class LocationBaseHelper extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "crimeBase.db";
+    private static final String DATABASE_NAME = "locationBase.db";
 
     public LocationBaseHelper(Context context){
         super(context, DATABASE_NAME,null,VERSION);
