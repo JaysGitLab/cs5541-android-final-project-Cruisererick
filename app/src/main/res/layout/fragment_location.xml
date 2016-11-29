@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/crime_details_label"
+        android:text="@string/location_details_label"
         style="?android:listSeparatorTextViewStyle"/>
 
     <fragment
@@ -21,12 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" android:layout_weight="0.89" />
 
-    <Button android:id="@+id/crime_report"
+    <Button android:id="@+id/location_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:text="@string/crime_report_text"/>
+        android:text="@string/location_report_text"/>
 
 
 

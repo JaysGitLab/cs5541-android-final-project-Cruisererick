@@ -21,16 +21,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB_8RAUbkBVYM0nR_BPJYZbmawu5teYDS4"
             />
-        <activity android:name="com.example.erick.finalproject.CrimeListActivity">
+        <activity android:name="com.example.erick.finalproject.LocationListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.example.erick.finalproject.CrimePaperActivity"
+        <activity android:name="com.example.erick.finalproject.LocationPaperActivity"
             android:label="@string/app_name"
-            android:parentActivityName="com.example.erick.finalproject.CrimeListActivity">
+            android:parentActivityName="com.example.erick.finalproject.LocationListActivity">
         </activity>
     </application>
 

@@ -36,14 +36,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/crime_title_label"
+            android:text="@string/location_title_label"
             style="?android:listSeparatorTextViewStyle"/>
         <EditText
             android:id="@+id/crime_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
-            android:hint="@string/crime_title_hint"/>
+            android:hint="@string/location_title_hint"/>
 
     </LinearLayout>
 

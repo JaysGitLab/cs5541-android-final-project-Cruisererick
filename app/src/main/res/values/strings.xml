@@ -1,22 +1,22 @@
 <resources>
     <string name="app_name">Finder</string>
-    <string name="crime_title_hint">Enter description of the area.</string>
-    <string name="crime_title_label">Description</string>
-    <string name="crime_details_label">Map</string>
-    <string name="crime_solved_label">Solved</string>
+    <string name="location_title_hint">Enter description of the area.</string>
+    <string name="location_title_label">Description</string>
+    <string name="location_details_label">Map</string>
+    <string name="location_solved_label">Solved</string>
     <string name="date_picker_title">Date of location:</string>
     <string name="new_location">New location</string>
     <string name="delete_location">Delete location</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$s locations</string>
-    <string name="crime_suspect_text">Choose Suspect</string>
-    <string name="crime_report_text">Send location</string>
-    <string name="crime_report">%1$s! The location was discovered on %2$s.%3$s, and %4$s</string>
-    <string name="crime_report_solved">The case is solved</string>
-    <string name="crime_report_unsolved">The cse is not solved</string>
-    <string name="crime_report_no_suspect">there is no suspect.</string>
-    <string name="crime_report_suspect">the subject is %s.</string>
-    <string name="crime_report_subject">CriminalIntent Crime Report</string>
+    <string name="location_suspect_text">Choose Suspect</string>
+    <string name="location_report_text">Send location</string>
+    <string name="location_report">%1$s! The location was discovered on %2$s.%3$s, and %4$s</string>
+    <string name="location_report_solved">The case is solved</string>
+    <string name="location_report_unsolved">The cse is not solved</string>
+    <string name="location_report_no_suspect">there is no suspect.</string>
+    <string name="location_report_suspect">the subject is %s.</string>
+    <string name="location_report_subject">CriminalIntent Crime Report</string>
     <string name="send_report">Send location report via</string>
 
 </resources>

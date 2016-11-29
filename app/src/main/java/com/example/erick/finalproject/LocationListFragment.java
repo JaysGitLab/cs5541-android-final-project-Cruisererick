@@ -3,7 +3,6 @@ package com.example.erick.finalproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,7 +19,7 @@ import java.util.List;
 /**
  * Created by Erick on 9/20/2016.
  */
-public class CrimeListFragment extends Fragment {
+public class LocationListFragment extends Fragment {
 
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
@@ -36,7 +35,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState){
-     View view = inflater.inflate(R.layout.fragment_crime_list,container,false);
+     View view = inflater.inflate(R.layout.fragment_location_list,container,false);
         mCrimeRecyclerView = (RecyclerView) view.findViewById(
                 R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -77,38 +76,31 @@ public class CrimeListFragment extends Fragment {
             mAdapter.setCrimes(locations);
             mAdapter.notifyDataSetChanged();
         }
-        //updateSubtitle();
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mTitleTextView;
-        private TextView mDateTextView;
-        private CheckBox mSolvedCheckBox;
         private Location mLocation;
 
             public CrimeHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
-            mDateTextView = (TextView) itemView.findViewById(R.id.list_item_crime_date_text_view);
-            //mSolvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_crime_solved_check_box);
+            mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_location_title_text_view);
+
 
 
 
         }
         @Override
         public void onClick(View v){
-            //Toast.makeText(getActivity(),mLocation.getTitle()+"Cliked!",Toast.LENGTH_SHORT).show();
-            //Intent intent = new Intent(getActivity(),CrimeActivity.class);
-            //Intent intent = CrimeActivity.newIntent(getActivity(),mLocation.getId());
-            Intent intent = CrimePaperActivity.newIntent(getActivity(), mLocation.getId());
+
+            Intent intent = LocationPaperActivity.newIntent(getActivity(), mLocation.getId());
             startActivity(intent);}
 
         public void bindLocation(Location location){
             mLocation = location;
             mTitleTextView.setText(mLocation.getDescription());
-            //mDateTextView.setText(mLocation.getDate().toString());
-           // mSolvedCheckBox.setChecked(mLocation.isSolve());
+
         }
 
     }
@@ -123,7 +115,7 @@ public class CrimeListFragment extends Fragment {
         @Override
         public CrimeHolder onCreateViewHolder(ViewGroup parent, int viewType){
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.list_item_crime,parent,false);
+            View view = layoutInflater.inflate(R.layout.list_item_location,parent,false);
             return new CrimeHolder(view);
         }
 
@@ -155,7 +147,7 @@ public class CrimeListFragment extends Fragment {
             case R.id.menu_item_new_location:
                 Location location = new Location();
                 LocationLab.get(getActivity()).addLocation(location);
-                Intent intent = CrimePaperActivity.newIntent(getActivity(), location.getId());
+                Intent intent = LocationPaperActivity.newIntent(getActivity(), location.getId());
                 startActivity(intent);
                 return true;
             case R.id.menu_item_delete_location:
@@ -166,17 +158,6 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
-    /*private void updateSubtitle(){
-        LocationLab locationLab = LocationLab.get(getActivity());
-        int crimeCount = locationLab.getCrime().size();
-        String subtitle = getString(R.string.subtitle_format, Integer.toString(crimeCount));
-
-        if(!mSubtitleVisible){
-            subtitle= null;
-        }
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.getSupportActionBar().setSubtitle(subtitle);
-    }*/
 
 
 }

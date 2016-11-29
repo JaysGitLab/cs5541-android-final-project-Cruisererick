@@ -16,21 +16,21 @@ import java.util.UUID;
  * Created by eric on 9/27/2016.
  */
 
-public class CrimePaperActivity extends AppCompatActivity {
+public class LocationPaperActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private List<Location> mLocations;
     private static final String EXTRA_CRIME_ID = "com.example.erick.criminalintent.crime_id";
 
     public static Intent newIntent(Context packageContext,UUID crimeId){
-       Intent intent = new Intent(packageContext,CrimePaperActivity.class);
+       Intent intent = new Intent(packageContext,LocationPaperActivity.class);
         intent.putExtra(EXTRA_CRIME_ID,crimeId);
         return intent;
     }
 @Override
     protected void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_crime_paper);
+    setContentView(R.layout.activity_location_paper);
     UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
     mViewPager = (ViewPager) findViewById(R.id.activity_crime_paper_view_paper);
     mLocations = LocationLab.get(this).getCrime();
@@ -39,7 +39,7 @@ public class CrimePaperActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Location location = mLocations.get(position);
-            return CrimeFragment.newInstance(location.getId());
+            return LocationFragment.newInstance(location.getId());
 
         }
 

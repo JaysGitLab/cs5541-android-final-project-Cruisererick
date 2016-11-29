@@ -12,6 +12,7 @@ import com.example.erick.finalproject.database.LocationDBSchema.LocationTable;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,6 +60,7 @@ public class LocationLab {
         } finally{
             cursor.close();
         }
+        Collections.reverse(locations);
         return locations;
     }
 

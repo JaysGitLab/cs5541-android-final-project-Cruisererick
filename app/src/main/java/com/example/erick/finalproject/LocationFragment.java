@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -45,38 +46,32 @@ import java.util.UUID;
 /**
  * Created by Erick on 9/15/2016.
  */
-public class CrimeFragment extends android.support.v4.app.Fragment {
+public class LocationFragment extends android.support.v4.app.Fragment {
 
     private static final String ARG_LOCATION_ID = "location_id";
-    private static final String DIALOG_DATE = "DialogDate";
-    private static final int REQUEST_DATE = 0;
-    private static final int REQUEST_CONTACT = 1;
     private static final int REQUEST_PHOTO = 2;
     private Location mLocation;
     private EditText mTitlefield;
-    private Button mDateButton;
-    private CheckBox mSolvedcheckBox;
     private Button mReportButton;
-    private Button mSuspectButton;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
     private File mPhotoFile;
 
 
-    private ImageView mImageView;
     private GoogleMap googleMap;
     private  GoogleApiClient mClient;
-    private static final String TAG = "CrimeFragment";
+    private static final String TAG = "LocationFragment";
     private android.location.Location mCurrentLocation;
     boolean isImageFitToScreen;
+    private Bitmap bitmap;
 
 
 
-    public static CrimeFragment newInstance(UUID LocationId){
+    public static LocationFragment newInstance(UUID LocationId){
         Bundle args = new Bundle();
         args.putSerializable(ARG_LOCATION_ID,LocationId);
 
-        CrimeFragment fragment = new CrimeFragment();
+        LocationFragment fragment = new LocationFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,8 +80,6 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedIntenceState){
         super.onCreate(savedIntenceState);
         setHasOptionsMenu(true);
-        //mLocation = new Location();
-        //UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra((CrimeActivity.EXTRA_CRIME_ID));
         UUID LocationId = (UUID) getArguments().getSerializable(ARG_LOCATION_ID);
         mLocation = LocationLab.get(getActivity()).getLocation(LocationId);
         mPhotoFile = LocationLab.get(getActivity()).getPhotoFile(mLocation);
@@ -121,21 +114,23 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     @Override
     public void onStart(){
         super.onStart();
-        //getActivity().invalidateOptionsMenu();
         mClient.connect();
     }
 
     @Override
     public void onPause(){
-        super.onPause();
+        if(bitmap!=null){
+        bitmap.recycle();
+        bitmap = null;}
         LocationLab.get(getActivity()).updateLocation(mLocation);
         mClient.disconnect();
+        super.onPause();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container
     ,Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.fragment_crime,container,false);
+        View v = inflater.inflate(R.layout.fragment_location,container,false);
 
 
         mTitlefield = (EditText)v.findViewById(R.id.crime_title);
@@ -157,58 +152,26 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
             }
 
         });
-        //mDateButton = (Button)v.findViewById(R.id.crime_date);
-        //updateDate();
-        //mDateButton.setEnabled(false);
-        /*mDateButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                FragmentManager manager = getFragmentManager();
-                //DatePickerFragment dialog = new DatePickerFragment();
-                DatePickerFragment dialog = DatePickerFragment.newInnstance(mLocation.getDate());
-                dialog.setTargetFragment(CrimeFragment.this,REQUEST_DATE);
-                dialog.show(manager, DIALOG_DATE);
-            }
-        });*/
-        //mSolvedcheckBox = (CheckBox)v.findViewById(R.id.crime_solved);
-        //mSolvedcheckBox.setChecked(mLocation.isSolve());
-       /* mSolvedcheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked){
-              // Set the crime solved propoety
-              mLocation.setSolve(isChecked);
-            }
-
-        });*/
-        mReportButton = (Button) v.findViewById(R.id.crime_report);
+        mReportButton = (Button) v.findViewById(R.id.location_report);
         mReportButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-            Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT,getCrimeReport());
-                i.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.crime_report_suspect));
-                i = Intent.createChooser(i,getString(R.string.send_report));
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("image/jpg");
+                String[] auxlo = mLocation.getLocation().split(",");
+                double longitude = Double.parseDouble(auxlo[0]);
+                double latitude = Double.parseDouble(auxlo[1]);
+                String uri = mLocation.getDescription()+"  "+"http://maps.google.com/maps?saddr=" +latitude+","+longitude;
+                StringBuffer smsBody = new StringBuffer();
+                smsBody.append(Uri.parse(uri));
+                i.putExtra(Intent.EXTRA_TEXT, smsBody.toString());
+                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.location_report_suspect));
+                i.putExtra(Intent.EXTRA_STREAM, Uri.parse(mPhotoFile.getPath()));
+                i = Intent.createChooser(i, getString(R.string.send_report));
                 startActivity(i);
 
             }
         });
-
-        final Intent pickContact = new Intent (Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-        //mSuspectButton = (Button) v.findViewById(R.id.crime_suspect);
-        /*mSuspectButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                startActivityForResult(pickContact,REQUEST_CONTACT);
-            }
-        });*/
-        /*if(mLocation.getSuspect()!= null){
-            mSuspectButton.setText(mLocation.getSuspect());
-        }*/
-
         PackageManager packageManager = getActivity().getPackageManager();
-        /*if (packageManager.resolveActivity(pickContact,
-                PackageManager.MATCH_DEFAULT_ONLY)==null){
-            mSuspectButton.setEnabled(false);
-        }*/
         mPhotoButton = (ImageButton) v.findViewById(R.id.crime_camara);
         final Intent captureImage = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
         boolean canTakePhoto = mPhotoFile != null &&
@@ -270,32 +233,6 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         if (requestCode == REQUEST_PHOTO){
             updatePhotoView();
         }
-    }
-
-    /*private void updateDate() {
-        mDateButton.setText(mLocation.getDate().toString());
-    }*/
-
-    private String getCrimeReport(){
-        String solvedString = null;
-
-        /*if(mLocation.isSolve()){
-            solvedString = getString(R.string.crime_report_solved);
-        }else{
-            solvedString = getString(R.string.crime_report_unsolved);
-        }
-        String dateFormat = "EEE,MMM dd";
-        String dateString = DateFormat.format(dateFormat,mLocation.getDate()).toString();
-
-        String suspect = mLocation.getSuspect();
-        if(suspect == null){
-            suspect = getString(R.string.crime_report_no_suspect);
-        }else{
-            suspect = getString(R.string.crime_report_suspect,suspect);
-        }
-        */
-        String report = getString(R.string.crime_report, mLocation.getDescription(),null,solvedString,null);
-        return report;
     }
 
     private void updatePhotoView(){
