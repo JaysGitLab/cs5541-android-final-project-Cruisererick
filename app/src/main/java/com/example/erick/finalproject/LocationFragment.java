@@ -155,20 +155,21 @@ public class LocationFragment extends android.support.v4.app.Fragment {
         mReportButton = (Button) v.findViewById(R.id.location_report);
         mReportButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("image/jpg");
-                String[] auxlo = mLocation.getLocation().split(",");
-                double longitude = Double.parseDouble(auxlo[0]);
-                double latitude = Double.parseDouble(auxlo[1]);
-                String uri = mLocation.getDescription()+"  "+"http://maps.google.com/maps?saddr=" +latitude+","+longitude;
-                StringBuffer smsBody = new StringBuffer();
-                smsBody.append(Uri.parse(uri));
-                i.putExtra(Intent.EXTRA_TEXT, smsBody.toString());
-                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.location_report_suspect));
-                i.putExtra(Intent.EXTRA_STREAM, Uri.parse(mPhotoFile.getPath()));
-                i = Intent.createChooser(i, getString(R.string.send_report));
-                startActivity(i);
-
+                if(mLocation.getLocation()!= null) {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("image/jpg");
+                    String[] auxlo = mLocation.getLocation().split(",");
+                    double longitude = Double.parseDouble(auxlo[0]);
+                    double latitude = Double.parseDouble(auxlo[1]);
+                    String uri = mLocation.getDescription() + "  " + "http://maps.google.com/maps?saddr=" + latitude + "," + longitude;
+                    StringBuffer smsBody = new StringBuffer();
+                    smsBody.append(Uri.parse(uri));
+                    i.putExtra(Intent.EXTRA_TEXT, smsBody.toString());
+                    i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.location_report_suspect));
+                    i.putExtra(Intent.EXTRA_STREAM, Uri.parse(mPhotoFile.getPath()));
+                    i = Intent.createChooser(i, getString(R.string.send_report));
+                    startActivity(i);
+                }
             }
         });
         PackageManager packageManager = getActivity().getPackageManager();
