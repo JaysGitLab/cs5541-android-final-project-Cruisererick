@@ -1,3 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_3e6d9fbe62e7f103428988b35b5d6c9c77f1f63c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_71c1179eea0bd34e108ea51daf72b0f65cc93899\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_e2bcbe6644f6b7411acb2c757b7d6e8ee211126f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_e75ced3f842651f5614b3bdad7faef598c30cc4f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.3.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="f2f7ec211ce4d244ee97a57523eeb4526dc3cf8a">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-7.3.0_16c5b3be8d8180e4da72b1fbb5133501fd2fdfea\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_458100a4128d16146b4285cdd7465551cfc4f077\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_736a103dc144aa94273b1e5508bd4de160392f79\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_3fc82c892383b358c34c8270fb83537ae7aaa52e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c755536e5a100d9c76c8ea0b72f76c018f7a9de2">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.0_341b571330faabbc0f66034f6abd57756630df96\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_edbd4777c81b697134e536399d7fae6201d8d203\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_c024de92b2c72d83c3bad8408f89c68b8034c5e3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_64603a630cde7c043bd3257e7204a830d8bd37cd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.1_d39a63115da21156cf323ab414815a88b552c28e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_c0e7f19d17133530f2750bb48ded2930dfd86007\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_dd649125a157ca4237f9d1d33798af170d8297bf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0cd4a7e25a6b6162f18bffe39c18c7a7d5ba76c6">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_9c33be09384589a4d9a575425b30c1786d464710\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\7.3.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fe3e0c6de7cceed888b277487238b6af9a1cc299">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-maps-7.3.0_0086f4f6fb6e85e6855c76b7ffcaaba9097b6f7c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.1_6ab2935eff06c2676b70184a7d999d0e7fb04d07\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="751f8b068473a448916cfd189d8d895f7fe05126">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_c178d23bc66e94b4cb388bd0a5c784171615afb7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_fce91684699b2ba8138c5f118a747b07a569e4d9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\7.3.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b2c07cdb814fe988ad05f7b4d767a841514a5991">
+        <dex dex="C:\Users\Juan\Desktop\Android\realfinal\cs5541-android-final-project-Cruisererick\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-location-7.3.0_1f5e088cf00f5d6f0a50083cf739a28552be5087\classes.dex" />
+    </item>
+
+</items>

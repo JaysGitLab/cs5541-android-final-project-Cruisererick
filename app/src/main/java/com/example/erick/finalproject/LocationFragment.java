@@ -240,7 +240,7 @@ public class LocationFragment extends android.support.v4.app.Fragment {
       if (mPhotoFile == null || !mPhotoFile.exists()){
         mPhotoView.setImageDrawable(null);
       }else{
-          Bitmap bitmap = PictureUtils.getScaleBitmap(mPhotoFile.getPath(),getActivity());
+          bitmap = PictureUtils.getScaleBitmap(mPhotoFile.getPath(),getActivity());
           mPhotoView.setImageBitmap(bitmap);
       }
 
